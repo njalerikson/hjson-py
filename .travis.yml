@@ -6,6 +6,23 @@ python:
   - "3.6"
   - "3.7"
   - "pypy"
+
+install:
+  # install hjson
+  - pip install .
+  # install testing infrastructure
+  - pip install pytest coverage codecov flake8 isort
+  # install black if Python3
+  - pip install black
+
 script:
-  - python -m compileall -f .
-  - python setup.py test
+  - echo "$TRAVIS_PYTHON_VERSION"
+
+  - flake8 hjson
+  - coverage run -m pytest
+  - isort -c -rc hjson tests setup.py
+
+  - black --check hjson tests setup.py
+
+after_success:
+  - codecov
