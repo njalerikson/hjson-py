@@ -1,5 +1,6 @@
 import codecs
 import sys
+from collections import OrderedDict
 from unittest import TestCase
 
 import hjson as json
@@ -72,15 +73,13 @@ class TestUnicode(TestCase):
         ]
         self.assertEqual(json.loads(s), eval(s))
         self.assertEqual(json.loads(s, object_pairs_hook=lambda x: x), p)
-        od = json.loads(s, object_pairs_hook=json.OrderedDict)
-        self.assertEqual(od, json.OrderedDict(p))
-        self.assertEqual(type(od), json.OrderedDict)
+        od = json.loads(s, object_pairs_hook=OrderedDict)
+        self.assertEqual(od, OrderedDict(p))
+        self.assertEqual(type(od), OrderedDict)
         # the object_pairs_hook takes priority over the object_hook
         self.assertEqual(
-            json.loads(
-                s, object_pairs_hook=json.OrderedDict, object_hook=lambda x: None
-            ),
-            json.OrderedDict(p),
+            json.loads(s, object_pairs_hook=OrderedDict, object_hook=lambda x: None),
+            OrderedDict(p),
         )
 
     def test_default_encoding(self):

@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from unittest import TestCase
 
 import hjson as json
@@ -80,7 +81,7 @@ class TestDump(TestCase):
     def test_ordered_dict(self):
         # http://bugs.python.org/issue6105
         items = [("one", 1), ("two", 2), ("three", 3), ("four", 4), ("five", 5)]
-        s = json.dumpsJSON(json.OrderedDict(items))
+        s = json.dumpsJSON(OrderedDict(items))
         self.assertEqual(s, '{"one": 1, "two": 2, "three": 3, "four": 4, "five": 5}')
 
     def test_indent_unknown_type_acceptance(self):

@@ -1,10 +1,8 @@
-from __future__ import absolute_import
-
 import decimal
+from collections import OrderedDict
 from unittest import TestCase
 
 import hjson as json
-from hjson import OrderedDict
 from hjson.compat import StringIO
 
 
