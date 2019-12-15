@@ -8,8 +8,6 @@ Usage::
     }
 
 """
-from __future__ import with_statement
-
 import sys
 
 import pkg_resources  # part of setuptools

@@ -1,10 +1,5 @@
-from __future__ import with_statement
-
-import codecs  # dump
 import os
-import subprocess
 import sys
-import tempfile
 from unittest import TestCase
 
 import hjson
