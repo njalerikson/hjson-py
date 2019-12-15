@@ -9,17 +9,17 @@ from hjson.compat import StringIO, reload_module
 class TestDecimal(TestCase):
     NUMS = "1.0", "10.00", "1.1", "1234567890.1234567890", "500"
 
-    def dumps(self, obj, **kw):
+    def dumps(self, obj, **kwargs):
         sio = StringIO()
-        json.dumpJSON(obj, sio, **kw)
-        res = json.dumpsJSON(obj, **kw)
+        json.dumpJSON(obj, sio, **kwargs)
+        res = json.dumpsJSON(obj, **kwargs)
         self.assertEqual(res, sio.getvalue())
         return res
 
-    def loads(self, s, **kw):
+    def loads(self, s, **kwargs):
         sio = StringIO(s)
-        res = json.loads(s, **kw)
-        self.assertEqual(res, json.load(sio, **kw))
+        res = json.loads(s, **kwargs)
+        self.assertEqual(res, json.load(sio, **kwargs))
         return res
 
     def test_decimal_encode(self):

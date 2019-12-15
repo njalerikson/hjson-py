@@ -81,7 +81,7 @@ def load(
     use_decimal=False,
     namedtuple_as_object=True,
     tuple_as_array=True,
-    **kw,
+    **kwarg,
 ):
     """Deserialize ``fp`` (a ``.read()``-supporting file-like object containing
     a JSON document) to a Python object.
@@ -134,7 +134,7 @@ def load(
         parse_int=parse_int,
         object_pairs_hook=object_pairs_hook,
         use_decimal=use_decimal,
-        **kw,
+        **kwarg,
     )
 
 
@@ -147,7 +147,7 @@ def loads(
     parse_int=None,
     object_pairs_hook=None,
     use_decimal=False,
-    **kw,
+    **kwargs,
 ):
     """Deserialize ``s`` (a ``str`` or ``unicode`` instance containing a JSON
     document) to a Python object.
@@ -199,24 +199,24 @@ def loads(
         and parse_float is None
         and object_pairs_hook is None
         and not use_decimal
-        and not kw
+        and not kwargs
     ):
         return _default_decoder.decode(s)
     if cls is None:
         cls = HjsonDecoder
     if object_hook is not None:
-        kw["object_hook"] = object_hook
+        kwargs["object_hook"] = object_hook
     if object_pairs_hook is not None:
-        kw["object_pairs_hook"] = object_pairs_hook
+        kwargs["object_pairs_hook"] = object_pairs_hook
     if parse_float is not None:
-        kw["parse_float"] = parse_float
+        kwargs["parse_float"] = parse_float
     if parse_int is not None:
-        kw["parse_int"] = parse_int
+        kwargs["parse_int"] = parse_int
     if use_decimal:
         if parse_float is not None:
             raise TypeError("use_decimal=True implies parse_float=Decimal")
-        kw["parse_float"] = Decimal
-    return cls(encoding=encoding, **kw).decode(s)
+        kwargs["parse_float"] = Decimal
+    return cls(encoding=encoding, **kwargs).decode(s)
 
 
 _default_hjson_encoder = HjsonEncoder(
@@ -254,7 +254,7 @@ def dump(
     item_sort_key=None,
     for_json=False,
     int_as_string_bitcount=None,
-    **kw,
+    **kwargs,
 ):
     """Serialize ``obj`` as a JSON formatted stream to ``fp`` (a
     ``.write()``-supporting file-like object).
@@ -337,7 +337,7 @@ def dump(
         and not item_sort_key
         and not for_json
         and int_as_string_bitcount is None
-        and not kw
+        and not kwargs
     ):
         iterable = _default_hjson_encoder.iterencode(obj)
     else:
@@ -358,7 +358,7 @@ def dump(
             item_sort_key=item_sort_key,
             for_json=for_json,
             int_as_string_bitcount=int_as_string_bitcount,
-            **kw,
+            **kwargs,
         ).iterencode(obj)
     # could accelerate with writelines in some versions of Python, at
     # a debuggability cost
@@ -383,7 +383,7 @@ def dumps(
     item_sort_key=None,
     for_json=False,
     int_as_string_bitcount=None,
-    **kw,
+    **kwargs,
 ):
     """Serialize ``obj`` to a JSON formatted ``str``.
 
@@ -461,7 +461,7 @@ def dumps(
         and not item_sort_key
         and not for_json
         and int_as_string_bitcount is None
-        and not kw
+        and not kwargs
     ):
         return _default_hjson_encoder.encode(obj)
     if cls is None:
@@ -481,7 +481,7 @@ def dumps(
         item_sort_key=item_sort_key,
         for_json=for_json,
         int_as_string_bitcount=int_as_string_bitcount,
-        **kw,
+        **kwargs,
     ).encode(obj)
 
 
@@ -522,7 +522,7 @@ def dumpJSON(
     item_sort_key=None,
     for_json=False,
     int_as_string_bitcount=None,
-    **kw,
+    **kwargs,
 ):
     """Serialize ``obj`` as a JSON formatted stream to ``fp`` (a
     ``.write()``-supporting file-like object).
@@ -614,7 +614,7 @@ def dumpJSON(
         and not item_sort_key
         and not for_json
         and int_as_string_bitcount is None
-        and not kw
+        and not kwargs
     ):
         iterable = _default_json_encoder.iterencode(obj)
     else:
@@ -636,7 +636,7 @@ def dumpJSON(
             item_sort_key=item_sort_key,
             for_json=for_json,
             int_as_string_bitcount=int_as_string_bitcount,
-            **kw,
+            **kwargs,
         ).iterencode(obj)
     # could accelerate with writelines in some versions of Python, at
     # a debuggability cost
@@ -662,7 +662,7 @@ def dumpsJSON(
     item_sort_key=None,
     for_json=False,
     int_as_string_bitcount=None,
-    **kw,
+    **kwargs,
 ):
     """Serialize ``obj`` to a JSON formatted ``str``.
 
@@ -749,7 +749,7 @@ def dumpsJSON(
         and not item_sort_key
         and not for_json
         and int_as_string_bitcount is None
-        and not kw
+        and not kwargs
     ):
         return _default_json_encoder.encode(obj)
     if cls is None:
@@ -770,7 +770,7 @@ def dumpsJSON(
         item_sort_key=item_sort_key,
         for_json=for_json,
         int_as_string_bitcount=int_as_string_bitcount,
-        **kw,
+        **kwargs,
     ).encode(obj)
 
 
