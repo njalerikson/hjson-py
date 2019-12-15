@@ -48,5 +48,6 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
+    tests_require=['pytest<5;python_version<"3.5"', 'pytest;python_version>="3.5"'],
     scripts=["bin/hjson", "bin/hjson.cmd"],
 )
