@@ -16,6 +16,9 @@ install:
   # install isort black if Python3
   - if [ "$TRAVIS_PYTHON_VERSION" == "3.7" ]; then pip install isort black; fi
 
+  # see what's installed
+  - pip list
+
 script:
   - echo "$TRAVIS_PYTHON_VERSION"
 
