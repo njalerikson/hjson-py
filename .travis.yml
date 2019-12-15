@@ -1,8 +1,5 @@
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
   - "3.6"
   - "3.7"
   - "3.8"
@@ -11,10 +8,9 @@ python:
 install:
   # install hjson
   - pip install .
+
   # install testing infrastructure
-  - pip install pytest coverage codecov flake8 isort
-  # install isort black if Python3
-  - if [ "$TRAVIS_PYTHON_VERSION" == "3.7" ]; then pip install isort black; fi
+  - pip install pytest coverage codecov flake8 isort black
 
   # see what's installed
   - pip list
@@ -22,10 +18,11 @@ install:
 script:
   - echo "$TRAVIS_PYTHON_VERSION"
 
+  # tests
   - flake8 hjson
   - coverage run -m pytest
-
-  - if [ "$TRAVIS_PYTHON_VERSION" == "3.7" ]; then isort -c -rc hjson tests setup.py; black --check hjson tests setup.py; fi
+  - isort -c -rc hjson tests setup.py
+  - black --check hjson tests setup.py
 
 after_success:
   - codecov

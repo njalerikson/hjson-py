@@ -81,7 +81,7 @@ def load(
     use_decimal=False,
     namedtuple_as_object=True,
     tuple_as_array=True,
-    **kwarg,
+    **kwargs,
 ):
     """Deserialize ``fp`` (a ``.read()``-supporting file-like object containing
     a JSON document) to a Python object.
@@ -134,7 +134,7 @@ def load(
         parse_int=parse_int,
         object_pairs_hook=object_pairs_hook,
         use_decimal=use_decimal,
-        **kwarg,
+        **kwargs,
     )
 
 
