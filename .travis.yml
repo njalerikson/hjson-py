@@ -7,16 +7,9 @@ python:
   - "3.7"
   - "3.8"
   - "pypy"
-script:
-  # - python -m compileall -f .
-  # - python setup.py test
-  # install dependencies
-  - pip install flake8 flake8-bugbear flake8-builtins flake8-coding flake8-comprehensions flake8-executable isort black
-  # run flake8 style tests - ignore code complexity checks
-  - flake8 hjson setup.py --extend-ignore=C901,R701,CCR001
-  # run isort import checks
-  - isort -c -rc hjson setup.py
-  # run black formatting check
-  - black --quiet --check hjson setup.py
-  # run test suite
-  - coverage run --source=hjson -m pytest hjson/tests
+jobs:
+  include:
+    - stage: lint
+      python: 3.8
+      script: ./.travis/lint.sh
+script: ./.travis/test.sh
