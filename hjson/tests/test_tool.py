@@ -1,25 +1,13 @@
+# -*- coding: utf-8 -*-
 from __future__ import with_statement
+
 import os
+import subprocess
 import sys
+import tempfile
 import textwrap
 import unittest
-import subprocess
-import tempfile
-try:
-    # Python 3.x
-    from test.support import strip_python_stderr
-except ImportError:
-    # Python 2.6+
-    try:
-        from test.test_support import strip_python_stderr
-    except ImportError:
-        # Python 2.5
-        import re
-        def strip_python_stderr(stderr):
-            return re.sub(
-                r"\[\d+ refs\]\r?\n?$".encode(),
-                "".encode(),
-                stderr).strip()
+
 
 class TestTool(unittest.TestCase):
     data = """
@@ -30,7 +18,8 @@ class TestTool(unittest.TestCase):
             :"yes"}  ]
            """
 
-    expect = textwrap.dedent("""\
+    expect = textwrap.dedent(
+        """\
     [
       [
         blorpie
@@ -50,33 +39,29 @@ class TestTool(unittest.TestCase):
         field: yes
       }
     ]
-    """)
+    """
+    )
 
     def runTool(self, args=None, data=None):
-        argv = [sys.executable, '-m', 'hjson.tool']
+        argv = [sys.executable, "-m", "hjson.tool"]
         if args:
             argv.extend(args)
-        proc = subprocess.Popen(argv,
-                                stdin=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                stdout=subprocess.PIPE)
+        proc = subprocess.Popen(
+            argv, stdin=subprocess.PIPE, stderr=subprocess.PIPE, stdout=subprocess.PIPE
+        )
         out, err = proc.communicate(data)
-        self.assertEqual(strip_python_stderr(err), ''.encode())
+        self.assertEqual(err, "".encode())
         self.assertEqual(proc.returncode, 0)
         return out
 
     def test_stdin_stdout(self):
-        self.assertEqual(
-            self.runTool(data=self.data.encode()),
-            self.expect.encode())
+        self.assertEqual(self.runTool(data=self.data.encode()), self.expect.encode())
 
     def test_infile_stdout(self):
         with tempfile.NamedTemporaryFile() as infile:
             infile.write(self.data.encode())
             infile.flush()
-            self.assertEqual(
-                self.runTool(args=[infile.name]),
-                self.expect.encode())
+            self.assertEqual(self.runTool(args=[infile.name]), self.expect.encode())
 
     def x_test_infile_outfile(self):
         """Not currently an option in tool"""
@@ -88,9 +73,9 @@ class TestTool(unittest.TestCase):
             outfile = tempfile.NamedTemporaryFile()
             try:
                 self.assertEqual(
-                    self.runTool(args=[infile.name, outfile.name]),
-                    ''.encode())
-                with open(outfile.name, 'rb') as f:
+                    self.runTool(args=[infile.name, outfile.name]), "".encode()
+                )
+                with open(outfile.name, "rb") as f:
                     self.assertEqual(f.read(), self.expect.encode())
             finally:
                 outfile.close()

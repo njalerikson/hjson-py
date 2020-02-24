@@ -1,22 +1,25 @@
-import sys, pickle
+# -*- coding: utf-8 -*-
+import pickle
+import sys
 from unittest import TestCase
 
 import hjson as json
-from hjson.compat import u, b
+from hjson.compat import b, u
+
 
 class TestErrors(TestCase):
     def test_string_keys_error(self):
-        data = [{'a': 'A', 'b': (2, 4), 'c': 3.0, ('d',): 'D tuple'}]
+        data = [{"a": "A", "b": (2, 4), "c": 3.0, ("d",): "D tuple"}]
         self.assertRaises(TypeError, json.dumpsJSON, data)
 
     def test_decode_error(self):
         err = None
         try:
-            json.loads('{}\na\nb')
+            json.loads("{}\na\nb")
         except json.HjsonDecodeError:
             err = sys.exc_info()[1]
         else:
-            self.fail('Expected HjsonDecodeError')
+            self.fail("Expected HjsonDecodeError")
         self.assertEqual(err.lineno, 2)
         self.assertEqual(err.colno, 1)
         self.assertEqual(err.endlineno, 3)
@@ -30,18 +33,18 @@ class TestErrors(TestCase):
             except json.HjsonDecodeError:
                 err = sys.exc_info()[1]
             else:
-                self.fail('Expected HjsonDecodeError')
+                self.fail("Expected HjsonDecodeError")
             self.assertEqual(err.lineno, 1)
             self.assertEqual(err.colno, 10)
 
     def test_error_is_pickable(self):
         err = None
         try:
-            json.loads('{}\na\nb')
+            json.loads("{}\na\nb")
         except json.HjsonDecodeError:
             err = sys.exc_info()[1]
         else:
-            self.fail('Expected HjsonDecodeError')
+            self.fail("Expected HjsonDecodeError")
         s = pickle.dumps(err)
         e = pickle.loads(s)
 

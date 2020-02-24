@@ -5,7 +5,16 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
+  - "3.8"
   - "pypy"
 script:
   - python -m compileall -f .
   - python setup.py test
+  # run flake8 style tests - ignore code complexity checks
+  - flake8 hjson setup.py --extend-ignore=C901,R701,CCR001
+  # run isort import checks
+  - isort -c -rc hjson setup.py
+  # run black formatting check
+  - black --quiet --check hjson setup.py
+  # run test suite
+  - coverage run --source=hjson -m pytest hjson/tests

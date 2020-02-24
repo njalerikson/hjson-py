@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 from unittest import TestCase
 
 import hjson as json
 
 # from http://json.org/JSON_checker/test/pass1.json
-JSON = r'''
+JSON = r"""
 [
     "JSON Test Pattern pass1",
     {"object with 1 member":["array with 1 element"]},
@@ -61,7 +62,8 @@ JSON = r'''
 1e-1,
 1e00,2e+00,2e-00
 ,"rosebud"]
-'''
+"""
+
 
 class TestPass1(TestCase):
     def test_parse(self):
