@@ -48,12 +48,6 @@ from .encoder import JSONEncoder
 from .encoderH import HjsonEncoder
 from .scanner import HjsonDecodeError
 
-
-try:
-    __version__ = pkg_resources.require("Hjson")[0].version
-except pkg_resources.DistributionNotFound:
-    # not installed yet - likely running tests
-    __version__ = "X.Y.X"
 __all__ = [
     "dump",
     "dumps",
@@ -67,6 +61,12 @@ __all__ = [
     "JSONEncoder",
     "simple_first",
 ]
+
+try:
+    __version__ = pkg_resources.require("Hjson")[0].version
+except pkg_resources.DistributionNotFound:
+    # not installed yet - likely running tests
+    __version__ = "X.Y.X"
 
 # based on simplejson by
 # __author__ = 'Bob Ippolito <bob@redivi.com>'
