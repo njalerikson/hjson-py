@@ -48,7 +48,12 @@ from .encoder import JSONEncoder
 from .encoderH import HjsonEncoder
 from .scanner import HjsonDecodeError
 
-__version__ = pkg_resources.require("Hjson")[0].version
+
+try:
+    __version__ = pkg_resources.require("Hjson")[0].version
+except pkg_resources.DistributionNotFound:
+    # not installed yet - likely running tests
+    __version__ = "X.Y.X"
 __all__ = [
     "dump",
     "dumps",
