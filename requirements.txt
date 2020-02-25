@@ -7,4 +7,4 @@ flake8-executable>=2.0.3 ; python_version >= "3.5"
 isort>=4.3.21 ; python_version >= "3.5"
 black>=19.10b0 ; python_version >= "3.5"
 coverage>=5.0.3
-pytest>=5.3.5
+pytest>=4.6.9
